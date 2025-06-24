@@ -1,0 +1,15 @@
+.grid {
+  background-image: url('../../../assets/stock-front.jpeg') !important;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vmin;
+
+}
+
+@media screen and (max-width: 1400px) {
+  .grid {
+    background-position: top;
+  }
+
+}
