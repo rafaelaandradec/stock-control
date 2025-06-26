@@ -12,6 +12,7 @@ import { CardModule } from 'primeng/card'; // Importando o módulo Card do Prime
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
+import { CookieService } from 'ngx-cookie-service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +31,7 @@ import { ToastModule } from 'primeng/toast';
     ToastModule
 
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
