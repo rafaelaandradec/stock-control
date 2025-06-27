@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { MessageService } from 'primeng/api';
 import { AuthRequest } from 'src/app/models/interfaces/user/auth/AuthRequest';
@@ -29,7 +30,8 @@ constructor(
   private formBuilder: FormBuilder,
   private userService: UserService, //importando o serviço de usuário
   private cookieService: CookieService,
-  private messageService: MessageService
+  private messageService: MessageService,
+  private router: Router //importando o serviço de roteamento para redirecionar após o login
 ) {}
 
 onSubmitLoginForm(): void { //método chamado ao enviar o formulário de login
@@ -41,6 +43,7 @@ if(this.loginForm.value && this.loginForm.valid) { //aqui verifica se o form est
         this.cookieService.set('USER_INFO', response?.token);
 
         this.loginForm.reset();
+        this.router.navigate(['/dashboard']); //redireciona para a página de dashboard após o login
         //toast
         this.messageService.add({
           severity: 'success',
