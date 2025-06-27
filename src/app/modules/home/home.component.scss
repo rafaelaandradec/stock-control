@@ -17,3 +17,9 @@
 .login-toggle {
   cursor: pointer;
 }
+
+@media sreen and (max-width: 1000px) {
+  .grid {
+    height: 100vmax;
+  }
+}
