@@ -11,6 +11,8 @@ import { CardModule } from 'primeng/card';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { CookieService } from 'ngx-cookie-service';
+import { ChartModule } from 'primeng/chart'; //importação do módulo de gráficos do PrimeNG
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { CookieService } from 'ngx-cookie-service';
     ButtonModule,
     ToolbarModule,
     CardModule,
-    ToastModule
+    ToastModule,
+    ChartModule,
+    SharedModule //importando o módulo compartilhado
   ],
   providers: [
     MessageService,
