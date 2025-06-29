@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { MessageService } from 'primeng/api';
+import { Subject, takeUntil } from 'rxjs';
 import { AuthRequest } from 'src/app/models/interfaces/user/auth/AuthRequest';
 import { SignupUserRequest } from 'src/app/models/interfaces/user/SignupUserRequest';
 import { UserService } from 'src/app/services/user/user.service';
@@ -12,7 +13,8 @@ import { UserService } from 'src/app/services/user/user.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
+export class HomeComponent implements OnDestroy {
+  private destroy$ = new Subject<void>();
 loginCard = true;
 
 loginForm = this.formBuilder.group({
@@ -37,6 +39,8 @@ constructor(
 onSubmitLoginForm(): void { //método chamado ao enviar o formulário de login
 if(this.loginForm.value && this.loginForm.valid) { //aqui verifica se o form está preenchido e válido
   this.userService.authUser(this.loginForm.value as AuthRequest) //se estiver, chama o serviço de autenticação passando o valor do form como parâmetro
+  .pipe(takeUntil(this.destroy$)
+  )
   .subscribe({
     next: (response) => {
       if(response) {
@@ -58,7 +62,7 @@ if(this.loginForm.value && this.loginForm.valid) { //aqui verifica se o form est
         severity: 'error',
         summary: 'Erro',
         detail: 'Erro ao fazer login. Verifique suas credenciais e tente novamente.',
-        life: 3000 //mensagem de erro que aparece por 3 segundos
+        life: 3000
       });
       console.log(err);
       },
@@ -69,6 +73,8 @@ if(this.loginForm.value && this.loginForm.valid) { //aqui verifica se o form est
 onSubmitSignupForm(): void { //método chamado ao enviar o formulário do cadastro
   if(this.signupForm.value && this.signupForm.valid) {
     this.userService.signupUser(this.signupForm.value as SignupUserRequest)
+    .pipe(takeUntil(this.destroy$)
+  )
     .subscribe({
       next: (response) => {
         if(response) {
@@ -79,7 +85,7 @@ onSubmitSignupForm(): void { //método chamado ao enviar o formulário do cadast
           severity: 'success',
           summary: 'Sucesso',
           detail: 'Usuário criado com sucesso!',
-          life: 3000 //mensagem de sucesso que aparece por 3 segundos
+          life: 3000
         });
       }
     },
@@ -88,12 +94,17 @@ onSubmitSignupForm(): void { //método chamado ao enviar o formulário do cadast
         severity: 'error',
         summary: 'Erro',
         detail: 'Erro ao criar usuário.',
-        life: 3000 //mensagem de erro que aparece por 3 segundos
+        life: 3000
       });
       console.log(err);
       },
     });
   }
 }
+
+ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete(); //limpa o observable para evitar vazamentos de memória
+  }
 }
 
