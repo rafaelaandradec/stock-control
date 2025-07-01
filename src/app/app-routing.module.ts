@@ -17,7 +17,12 @@ const routes: Routes = [
   {
     path: 'dashboard',
     loadChildren: () => import('./modules/dashboard/dashboard.module').then((m) => m.DashboardModule), //importando rotas filhas
-  canActivate: [AuthGuard] //proteção de rota
+    canActivate: [AuthGuard] //proteção de rota
+  },
+  {
+    path: 'products',
+    loadChildren: () => import('./modules/products/products.module').then((m) => m.ProductsModule),
+    canActivate: [AuthGuard]
   }
 
 ];
