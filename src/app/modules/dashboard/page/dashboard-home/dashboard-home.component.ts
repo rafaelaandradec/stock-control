@@ -29,7 +29,7 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
   }
 
   getProductsDatas(): void { //método que busca produtos no banco de dados
-    this.productsService.GetAllProducts()
+    this.productsService.getAllProducts()
     .pipe(takeUntil(this.destroy$))
     .subscribe({
       next: (response) => {
