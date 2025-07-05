@@ -7,7 +7,7 @@ import { ProductsService } from 'src/app/services/products/products.service';
 import { ProductsDataTransferService } from 'src/app/shared/services/products/products-data-transfer.service';
 import { EventAction } from 'src/app/models/interfaces/products/event/EventAction';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ProductFormComponent } from '../../components/product-form/product-form.component';
+import { ProductsFormComponent } from '../../components/products-form/products-form.component';
 
 @Component({
   selector: 'app-products-home',
@@ -67,7 +67,7 @@ ngOnInit(): void {
 
   handleProductAction(event: EventAction): void {
     if(event) {
-      this.ref = this.dialogService.open(ProductFormComponent, {
+      this.ref = this.dialogService.open(ProductsFormComponent, {
         header: event?.action,
         width: '70%',
         contentStyle: {overflow: 'auto'},
