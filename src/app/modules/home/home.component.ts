@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
@@ -13,8 +13,11 @@ import { UserService } from 'src/app/services/user/user.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnDestroy {
-  private destroy$ = new Subject<void>();
+export class HomeComponent implements OnDestroy{  //AfterViewInit
+// @ViewChild('emailInput') public emailInputRef!: ElementRef;
+// @ViewChild('passwordInput') public passwordInputRef!: ElementRef;
+
+private destroy$ = new Subject<void>();
 loginCard = true;
 
 loginForm = this.formBuilder.group({
@@ -35,6 +38,13 @@ constructor(
   private messageService: MessageService,
   private router: Router //importando o serviço de roteamento para redirecionar após o login
 ) {}
+
+  // ngAfterViewInit(): void {
+  //   this.emailInputRef.nativeElement.value = 'Seu email aqui';
+  //   this.passwordInputRef.nativeElement.value = 'Sua senha aqui';
+  //   console.log('EMAIL INPUT =>', this.emailInputRef.nativeElement.value);
+  //   console.log('PASSWORD INPUT =>', this,this.passwordInputRef.nativeElement.value);
+  // }
 
 onSubmitLoginForm(): void { //método chamado ao enviar o formulário de login
 if(this.loginForm.value && this.loginForm.valid) { //aqui verifica se o form está preenchido e válido

@@ -121,5 +121,4 @@ export class CategoriesHomeComponent implements OnInit{
     this.destroy$.next();
     this.destroy$.complete();
   }
-
 }
